@@ -17,6 +17,11 @@ public class ServiceAController {
     @ResponseBody
     public Result testPost(@RequestBody Param request) {
         logger.info("testPost: data={}", request);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return new Result(200, "success: " + request.getParamA() + "," + request.getParamB());
     }
 

@@ -43,3 +43,22 @@ spring:
         watch:
           enabled: true
         watch-delay: 30000
+logging:
+  level:
+    com.zhaowa.galaxy.springcloud.customer.feign.AService: DEBUG
+
+feign:
+  client:
+    config:
+      # 全局超时配置
+      default:
+        # 网络连接阶段1秒超时
+        connectTimeout: 1000
+        # 服务请求响应阶段5秒超时
+        readTimeout: 5000
+      # 针对某个特定服务的超时配置
+      service-a:
+        connectTimeout: 1000
+        readTimeout: 2000
+  circuitbreaker:
+    enabled: true

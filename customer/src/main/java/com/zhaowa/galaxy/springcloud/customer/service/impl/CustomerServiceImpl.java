@@ -1,5 +1,6 @@
 package com.zhaowa.galaxy.springcloud.customer.service.impl;
 
+import com.zhaowa.galaxy.springcloud.customer.feign.AService;
 import com.zhaowa.galaxy.springcloud.customer.service.CustomerService;
 import com.zhaowa.galaxy.springcloud.servicea.api.Param;
 import com.zhaowa.galaxy.springcloud.servicea.api.Result;
@@ -17,23 +18,28 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private WebClient.Builder webClientBuilder;
 
+    @Autowired
+    private AService aService;
+
     @Override
-    public Mono<Result> testPost(String param1, String param2) {
+    public Result testPost(String param1, String param2) {
         Param param = new Param(param1, param2);
-        return webClientBuilder.build().post()
-                .uri("http://service-a/servicea/testPost")
-                .bodyValue(param)
-                .retrieve()
-                .bodyToMono(Result.class);
+//        return webClientBuilder.build().post()
+//                .uri("http://service-a/servicea/testPost")
+//                .bodyValue(param)
+//                .retrieve()
+//                .bodyToMono(Result.class);
+        return aService.testPost(param);
     }
 
     @Override
-    public Mono<String> testGet(String param1, String param2) {
-        return webClientBuilder.build().get()
-                .uri("http://service-a/servicea/testGet?param=" + param1 + "abc" + param2)
-                .retrieve()
-                .bodyToMono(Result.class)
-                .map(Result::getMsg);
+    public String testGet(String param1, String param2) {
+//        return webClientBuilder.build().get()
+//                .uri("http://service-a/servicea/testGet?param=" + param1 + "abc" + param2)
+//                .retrieve()
+//                .bodyToMono(Result.class)
+//                .map(Result::getMsg);
+        return aService.testGet(param1 + "abc" + param2).getMsg();
     }
 
     @Override

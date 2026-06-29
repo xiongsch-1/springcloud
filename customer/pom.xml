@@ -17,6 +17,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
         <!-- Nacos服务发现组件 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -27,6 +32,33 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
+        <!-- 移除旧feign-core，引入webflux兼容feign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!-- 关键：webflux兼容feign编码器 -->
+<!--        <dependency>-->
+<!--            <groupId>com.playtika.reactivefeign</groupId>-->
+<!--            <artifactId>reactive-feign-spring-boot-starter</artifactId>-->
+<!--            <version>4.0.3</version> &lt;!&ndash; 对应SpringCloud版本 &ndash;&gt;-->
+<!--        </dependency>-->
+
+        <!-- hystrix组件，专门用来演示openfeign降级 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <version>2.2.10.RELEASE</version>
+            <exclusions>
+                <!-- 移除Ribbon负载均衡器 -->
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-netflix-ribbon</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- webflux服务调用 -->
@@ -50,8 +82,5 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-
-
     </dependencies>
-
 </project>

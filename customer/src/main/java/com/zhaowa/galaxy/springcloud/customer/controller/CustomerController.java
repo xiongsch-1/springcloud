@@ -16,7 +16,7 @@ public class CustomerController {
 
     @GetMapping("/test1")
     @ResponseBody
-    public Mono<Result> test1(@RequestParam String name1, @RequestParam String name2) {
+    public Result test1(@RequestParam String name1, @RequestParam String name2) {
         return customerService.testPost(name1,name2);
     }
 
@@ -28,7 +28,7 @@ public class CustomerController {
 
     @GetMapping("/test3")
     @ResponseBody
-    public Mono<String> test3(@RequestParam String name1, @RequestParam String name2) {
+    public String test3(@RequestParam String name1, @RequestParam String name2) {
         return customerService.testGet(name1,name2);
     }
 }
