@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(value = "service-a", path = "/servicea",
-//    fallback = AServiceFallback.class,
-    fallbackFactory = AServiceFallbackFactory.class)
+//    fallback = AServiceFallback.class
+    fallbackFactory = AServiceFallbackFactory.class
+)
 public interface AService {
     @PostMapping("/testPost")
     Result testPost(@RequestBody Param request);

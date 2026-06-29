@@ -45,7 +45,7 @@ spring:
         watch-delay: 30000
 logging:
   level:
-    com.zhaowa.galaxy.springcloud.customer.feign.AService: DEBUG
+    com.zhaowa.galaxy.springcloud.customer.feign.AService: debug
 
 feign:
   client:

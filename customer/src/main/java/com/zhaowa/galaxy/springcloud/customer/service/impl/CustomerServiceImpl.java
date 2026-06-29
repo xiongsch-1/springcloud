@@ -1,6 +1,7 @@
 package com.zhaowa.galaxy.springcloud.customer.service.impl;
 
 import com.zhaowa.galaxy.springcloud.customer.feign.AService;
+import com.zhaowa.galaxy.springcloud.customer.loadbalance.TrafficContext;
 import com.zhaowa.galaxy.springcloud.customer.service.CustomerService;
 import com.zhaowa.galaxy.springcloud.servicea.api.Param;
 import com.zhaowa.galaxy.springcloud.servicea.api.Result;
@@ -39,6 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
 //                .retrieve()
 //                .bodyToMono(Result.class)
 //                .map(Result::getMsg);
+        TrafficContext.setTrafficVersion(param1.substring(0,3));
         return aService.testGet(param1 + "abc" + param2).getMsg();
     }
 

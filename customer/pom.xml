@@ -34,18 +34,11 @@
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
 
-        <!-- 移除旧feign-core，引入webflux兼容feign -->
+        <!-- openfeign -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-
-        <!-- 关键：webflux兼容feign编码器 -->
-<!--        <dependency>-->
-<!--            <groupId>com.playtika.reactivefeign</groupId>-->
-<!--            <artifactId>reactive-feign-spring-boot-starter</artifactId>-->
-<!--            <version>4.0.3</version> &lt;!&ndash; 对应SpringCloud版本 &ndash;&gt;-->
-<!--        </dependency>-->
 
         <!-- hystrix组件，专门用来演示openfeign降级 -->
         <dependency>
