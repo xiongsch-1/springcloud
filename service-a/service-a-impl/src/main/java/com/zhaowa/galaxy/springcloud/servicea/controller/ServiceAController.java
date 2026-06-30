@@ -17,6 +17,9 @@ public class ServiceAController {
     @ResponseBody
     public Result testPost(@RequestBody Param request) {
         logger.info("testPost: data={}", request);
+        if (request.getParamA() == null || request.getParamA().isEmpty()) {
+            throw new RuntimeException("param a cannot be empty!");
+        }
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {

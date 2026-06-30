@@ -62,3 +62,25 @@ feign:
         readTimeout: 2000
   circuitbreaker:
     enabled: true
+# 添加 Hystrix 配置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000  # 全局默认5秒
+      metrics:
+        rollingStates:
+          timeInMilliseconds: 10000       #滑动窗口时间长度（默认10秒）
+          numBuckets: 10                  #滑动窗口分桶数量（默认10个）
+      circuitBreaker:
+        enabled: true
+        requestVolumeThreshold: 2         #滑动窗口内最小请求数
+        errorThresholdPercentage: 50      #错误率达到50%触发熔断
+        sleepWindowInMilliseconds: 60000  #熔断后60秒进入半开状态
+    service-a:  #针对 service-a 的配置
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4500 # 比 Feign 的 readTimeOut 略大
