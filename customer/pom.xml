@@ -54,6 +54,17 @@
             </exclusions>
         </dependency>
 
+        <!-- Nacos Config-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <!-- 读取bootstrap文件 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
         <!-- webflux服务调用 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
