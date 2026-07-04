@@ -42,7 +42,13 @@ spring:
         watch:
           enabled: true
         watch-delay: 30000
-
+    sentinel:
+      transport:
+        # sentinel api端口，默认8719
+        port: 8719
+        # dashboard地址
+        dashboard: localhost:8080
+      web-context-unify: false  # 关闭 context 整合，以支持链路流控
 logging:
   level:
     com.zhaowa.galaxy.springcloud.customer.feign.AService: debug

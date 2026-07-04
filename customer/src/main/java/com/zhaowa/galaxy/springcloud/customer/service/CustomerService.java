@@ -9,4 +9,6 @@ public interface CustomerService {
     Result testPost(String param1, String param2);
     String testGet(String param1, String param2);
     Mono<ResponseEntity<Result>> testGet2(String param1, String param2);
+    Result testSentinel(String param1, String param2);
+    Result testSentinel2(String param1, String param2);
 }

@@ -21,4 +21,16 @@ public class AServiceFallback implements AService {
         logger.info("fallback testGet");
         return new Result(2, "get error");
     }
+
+    @Override
+    public Result testSentinel(String param) {
+        logger.info("fallback testSentinel");
+        return new Result(3, "sentinel error");
+    }
+
+    @Override
+    public Result testSentinel2(String param) {
+        logger.info("fallback testSentinel2");
+        return new Result(4, "sentinel2 error");
+    }
 }

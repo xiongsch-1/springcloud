@@ -1,5 +1,6 @@
 package com.zhaowa.galaxy.springcloud.customer.service.impl;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.zhaowa.galaxy.springcloud.customer.feign.AService;
 import com.zhaowa.galaxy.springcloud.customer.loadbalance.TrafficContext;
 import com.zhaowa.galaxy.springcloud.customer.service.CustomerService;
@@ -52,5 +53,18 @@ public class CustomerServiceImpl implements CustomerService {
                 .header(TRAFFIC_VERSION, param1.substring(0,3))
                 .retrieve()
                 .toEntity(Result.class);
+    }
+
+    @Override
+    @SentinelResource(value = "testSentinelService")
+    public Result testSentinel(String param1, String param2) {
+        Result r1 = aService.testSentinel(param1);
+        return new Result(200, r1.getMsg());
+    }
+
+    @Override
+    public Result testSentinel2(String param1, String param2) {
+        Result r2 = aService.testSentinel2(param2);
+        return new Result(200, r2.getMsg());
     }
 }

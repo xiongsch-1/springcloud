@@ -20,4 +20,10 @@ public interface AService {
 
     @GetMapping("/testGet")
     Result testGet(@RequestParam String param);
+
+    @GetMapping("/testSentinel")
+    Result testSentinel(@RequestParam String param);
+
+    @GetMapping("/testSentinel2")
+    Result testSentinel2(@RequestParam String param);
 }

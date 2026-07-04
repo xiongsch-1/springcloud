@@ -23,9 +23,6 @@ public class CustomerController {
     @GetMapping("/test1")
     @ResponseBody
     public Result test1(@RequestParam String name1, @RequestParam String name2) {
-        if (disable) {
-            return new Result(0, "remote service disabled!");
-        }
         return customerService.testPost(name1,name2);
     }
 
@@ -39,5 +36,32 @@ public class CustomerController {
     @ResponseBody
     public String test3(@RequestParam String name1, @RequestParam String name2) {
         return customerService.testGet(name1,name2);
+    }
+
+    @GetMapping("/test4")
+    @ResponseBody
+    public Result test4(@RequestParam String name1, @RequestParam String name2) {
+        if (disable) {
+            return new Result(0, "remote service disabled!");
+        }
+        return customerService.testPost(name1,name2);
+    }
+
+    @GetMapping("/testSentinel")
+    @ResponseBody
+    public Result testSentinel(@RequestParam String name1, @RequestParam String name2) {
+        return customerService.testSentinel(name1,name2);
+    }
+
+    @GetMapping("/testSentinel2")
+    @ResponseBody
+    public Result testSentinel2(@RequestParam String name1, @RequestParam String name2) {
+        return customerService.testSentinel2(name1,name2);
+    }
+
+    @GetMapping("/testSentinel3")
+    @ResponseBody
+    public Result testSentinel3(@RequestParam String name1, @RequestParam String name2) {
+        return customerService.testSentinel(name1,name2);
     }
 }

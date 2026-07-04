@@ -27,6 +27,18 @@ public class AServiceFallbackFactory implements FallbackFactory<AService> {
                 logger.error("fallback testGet", cause);
                 return new Result(2, "fallback testGet" + cause.toString());
             }
+
+            @Override
+            public Result testSentinel(String param) {
+                logger.error("fallback testSentinel", cause);
+                return new Result(3, "fallback testSentinel" + cause.toString());
+            }
+
+            @Override
+            public Result testSentinel2(String param) {
+                logger.error("fallback testSentinel2", cause);
+                return new Result(4, "fallback testSentinel2" + cause.toString());
+            }
         };
     }
 }
