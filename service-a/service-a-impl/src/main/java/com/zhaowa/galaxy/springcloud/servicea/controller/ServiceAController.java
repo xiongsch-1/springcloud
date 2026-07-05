@@ -47,13 +47,28 @@ public class ServiceAController {
 
     @GetMapping("/testSentinel2")
     @ResponseBody
-    @SentinelResource(value = "testSentinel2", blockHandler = "testSentinel2_block")
+    @SentinelResource(
+            value = "testSentinel2",
+            blockHandler = "testSentinel2_block",
+            fallback = "testSentinel2_fallback"
+    )
     public Result testSentinel2(@RequestParam String param) {
+        if (param.length() == 5) {
+            throw new RuntimeException("test exception");
+        }
         return new Result(200, "testSentinel2 success: " + param);
     }
+
+    // 限流/熔断时的处理方法
     public Result testSentinel2_block(String param, BlockException exception) {
-        logger.info("testSentinel2 接口被限流：", exception);
+        logger.info("testSentinel2 被限流/熔断", exception);
         return new Result(1, "testSentinel2 block: " + param);
+    }
+
+    // 业务异常降级时的处理方法
+    public Result testSentinel2_fallback(String param, Throwable throwable) {
+        logger.warn("testSentienl2 降级！异常：{}", throwable.getMessage());
+        return new Result(2, "testSentinel2 fallback: " + param);
     }
 
 }
