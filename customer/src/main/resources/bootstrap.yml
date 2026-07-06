@@ -8,7 +8,7 @@ spring:
         file-extension: yml
         # prefix: 文件名前缀，默认是spring.application.name
         # 如果没有指定命名空间，则默认命名空间为public
-        namespace : 0eaa91ef-7772-4485-8b8d-97105bb9f25a
+        namespace : dev
         # 如果没有配置Group，则默认值为DEFAULT_GROUP
         group: DEFAULT_GROUP
         # 从Nacos 读取配置项的超时时间

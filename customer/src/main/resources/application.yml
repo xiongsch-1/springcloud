@@ -32,7 +32,7 @@ spring:
         # 命名空间ID，Nacos通过不同的命名空间来区分不同的环境，进行数据隔离，
         # 服务消费时只能消费到对应命名空间下的服务。
         # [注意]需要在nacos-server中创建好namespace，然后把id copy进来
-        namespace: 0eaa91ef-7772-4485-8b8d-97105bb9f25a #dev
+        namespace: dev
         # [注意]两个服务如果存在上下游调用关系，必须配置相同的group才能发起访问
         group: myGroup
         # 向注册中心注册服务，默认为true
@@ -49,6 +49,19 @@ spring:
         # dashboard地址
         dashboard: localhost:8080
       web-context-unify: false  # 关闭 context 整合，以支持链路流控
+      datasource:
+        # 数据源的key，可以自由命名
+        zhaowa-flow:
+          # 指定当前数据源是nacos
+          nacos:
+            # 设置Nacos的连接地址、命名空间和Group ID
+            server-addr: localhost:8848
+            namespace: dev
+            groupId: SENTINEL_GROUP
+            # 设置Nacos中配置文件的命名规则
+            dataId: ${spring.application.name}-flow-rules
+            # 必填的重要字段，指定当前规则类型是“限流”
+            rule-type: flow
 logging:
   level:
     com.zhaowa.galaxy.springcloud.customer.feign.AService: debug
