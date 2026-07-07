@@ -34,6 +34,9 @@ public class ServiceAController {
     @ResponseBody
     public Result testGet(@RequestParam String param) {
         logger.info("testGet: data={}", param);
+        if (param.startsWith("err")) {
+            throw new RuntimeException("testGet error!");
+        }
         return new Result(200, "success: " + param);
     }
 

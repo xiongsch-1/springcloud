@@ -3,6 +3,8 @@ package com.zhaowa.galaxy.springcloud.customer.controller;
 
 import com.zhaowa.galaxy.springcloud.customer.service.CustomerService;
 import com.zhaowa.galaxy.springcloud.servicea.api.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -14,6 +16,8 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/customer")
 @RefreshScope
 public class CustomerController {
+    public static final Logger log = LoggerFactory.getLogger(CustomerController.class);
+
     @Autowired
     private CustomerService customerService;
 
@@ -35,6 +39,7 @@ public class CustomerController {
     @GetMapping("/test3")
     @ResponseBody
     public String test3(@RequestParam String name1, @RequestParam String name2) {
+        log.info("name1={} name2={}", name1, name2);
         return customerService.testGet(name1,name2);
     }
 
@@ -63,5 +68,18 @@ public class CustomerController {
     @ResponseBody
     public Result testSentinel3(@RequestParam String name1, @RequestParam String name2) {
         return customerService.testSentinel(name1,name2);
+    }
+
+    @GetMapping("/warmUp")
+    @ResponseBody
+    public Result warmUp(@RequestParam String name1, @RequestParam String name2) {
+        return new Result(0, "warmup:" + name1 + "+" + name2);
+    }
+
+    @GetMapping("/testZipkin")
+    @ResponseBody
+    public String testZipkin(@RequestParam String name1, @RequestParam String name2) {
+        log.info("name1={} name2={}", name1, name2);
+        return customerService.testGet(name1, name2);
     }
 }

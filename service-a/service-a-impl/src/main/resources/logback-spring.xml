@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+    <!-- 指定路径下的资源输出Debug日志 -->
+    <springProperty scope="context" name="applicationName" source="spring.application.name" />
+
+    <!-- 控制台 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <!-- 日志输出编码 -->
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+<!--            <pattern>-->
+<!--                %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%X{traceId},%X{spanId},%X{X-B3-ParentSpanId}] - %msg%n-->
+<!--            </pattern>-->
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 日志输出级别调整为INFO，线上不要输出debug日志-->
+    <root level="INFO">
+        <appender-ref ref="console" />
+<!--        <appender-ref ref="logstash" />-->
+    </root>
+</configuration>
