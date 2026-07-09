@@ -6,8 +6,8 @@
     <springProperty scope="context" name="applicationName" source="spring.application.name" />
 
     <!-- 定义日志文件路径 -->
-    <property name="LOG_PATH" value="E:/xiongsch/workspace/project/galaxy/workspace/logs/service-a" />
-    <property name="LOG_FILE" value="service-a" />
+    <property name="LOG_PATH" value="E:/xiongsch/workspace/project/galaxy/workspace/logs/customer" />
+    <property name="LOG_FILE" value="customer" />
 
     <!-- 控制台 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
