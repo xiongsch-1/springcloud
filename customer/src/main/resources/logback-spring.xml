@@ -21,50 +21,50 @@
         </encoder>
     </appender>
 
-    <!-- 输出的JSON格式的信息到Logstash -->
-    <appender name="fileJson" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!-- 日志文件路径 -->
-        <file>${LOG_PATH}/${LOG_FILE}.log</file>
+<!--    &lt;!&ndash; 输出的JSON格式的信息到Logstash &ndash;&gt;-->
+<!--    <appender name="fileJson" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        &lt;!&ndash; 日志文件路径 &ndash;&gt;-->
+<!--        <file>${LOG_PATH}/${LOG_FILE}.log</file>-->
 
-        <!-- 滚动策略：按日期和大小 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <!-- 日志文件命名模式 -->
-            <fileNamePattern>${LOG_PATH}/${LOG_FILE}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <!-- 单个文件最大大小 -->
-            <maxFileSize>100MB</maxFileSize>
-            <!-- 保留天数 -->
-            <maxHistory>30</maxHistory>
-            <!-- 总大小限制 -->
-            <totalSizeCap>10GB</totalSizeCap>
-        </rollingPolicy>
+<!--        &lt;!&ndash; 滚动策略：按日期和大小 &ndash;&gt;-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+<!--            &lt;!&ndash; 日志文件命名模式 &ndash;&gt;-->
+<!--            <fileNamePattern>${LOG_PATH}/${LOG_FILE}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>-->
+<!--            &lt;!&ndash; 单个文件最大大小 &ndash;&gt;-->
+<!--            <maxFileSize>100MB</maxFileSize>-->
+<!--            &lt;!&ndash; 保留天数 &ndash;&gt;-->
+<!--            <maxHistory>30</maxHistory>-->
+<!--            &lt;!&ndash; 总大小限制 &ndash;&gt;-->
+<!--            <totalSizeCap>10GB</totalSizeCap>-->
+<!--        </rollingPolicy>-->
 
-        <!-- 日志输出的JSON格式 -->
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <timestamp>
-                    <timezone>UTC</timezone>
-                </timestamp>
-                <pattern>
-                    <pattern>
-                        {
-                        "severity": "%level",
-                        "service": "${applicationName:-}",
-                        "trace": "%X{traceId:-}",
-                        "span": "%X{spanId:-}",
-                        "pid": "${PID:-}",
-                        "thread": "%thread",
-                        "class": "%logger{40}",
-                        "rest": "%message"
-                        }
-                    </pattern>
-                </pattern>
-            </providers>
-        </encoder>
-    </appender>
+<!--        &lt;!&ndash; 日志输出的JSON格式 &ndash;&gt;-->
+<!--        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">-->
+<!--            <providers>-->
+<!--                <timestamp>-->
+<!--                    <timezone>UTC</timezone>-->
+<!--                </timestamp>-->
+<!--                <pattern>-->
+<!--                    <pattern>-->
+<!--                        {-->
+<!--                        "severity": "%level",-->
+<!--                        "service": "${applicationName:-}",-->
+<!--                        "trace": "%X{traceId:-}",-->
+<!--                        "span": "%X{spanId:-}",-->
+<!--                        "pid": "${PID:-}",-->
+<!--                        "thread": "%thread",-->
+<!--                        "class": "%logger{40}",-->
+<!--                        "rest": "%message"-->
+<!--                        }-->
+<!--                    </pattern>-->
+<!--                </pattern>-->
+<!--            </providers>-->
+<!--        </encoder>-->
+<!--    </appender>-->
 
     <!-- 日志输出级别调整为INFO，线上不要输出debug日志-->
     <root level="INFO">
         <appender-ref ref="console" />
-        <appender-ref ref="logstash" />
+<!--        <appender-ref ref="logstash" />-->
     </root>
 </configuration>

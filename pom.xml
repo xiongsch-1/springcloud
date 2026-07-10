@@ -11,6 +11,7 @@
     <modules>
         <module>service-a</module>
         <module>customer</module>
+        <module>gateway</module>
     </modules>
 
     <properties>

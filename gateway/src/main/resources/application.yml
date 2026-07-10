@@ -1,0 +1,121 @@
+server:
+  port: 30000
+  error:
+    include-message: always
+
+spring:
+  # 分布式限流的Redis连接
+  redis:
+    host: localhost
+    port: 6379
+  cloud:
+    # Nacos配置项
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        heart-beat-interval: 5000
+        heart-beat-timeout: 15000
+        cluster-name: Cluster-A
+        namespace: dev
+        group: myGroup
+        register-enabled: true
+        watch:
+          enabled: true
+        watch-delay: 30000
+    gateway:
+      discovery:
+        locator:
+          # 创建默认路由，以"/服务名称/接口地址"的格式规则进行转发
+          # Nacos服务名称本来就是小写，但Eureka默认大写
+          lower-case-service-id: true
+          enabled: true
+#      routes:
+#        # 路由1：customer服务
+#        - id: customer-route
+#          uri: lb://customer
+#          predicates:
+#            - Path=/gateway/customer/**
+#          filters:
+#            - StripPrefix=1
+#
+#        # 路由2：service-a服务（带order）
+#        - id: service-a-route
+#          uri: lb://service-a
+#          order: 1
+#          predicates:
+#            - Path=/gateway/service-a/**
+#          filters:
+#            - StripPrefix=1
+#
+#        # 路由3：百度路由
+#        - id: id-001
+#          uri: http://www.baidu.com
+#          predicates:
+#            - Path=/baidu/**
+#            - Method=GET,POST
+#
+#        # 路由4：复杂多条件验证
+#        - id: id-002
+#          uri: http://www.qq.com
+#          predicates:
+#            - Cookie=myCookie,regex
+#            - Header=myHeaderA
+#            - Header=myHeaderB,regex
+#            - Query=paramA
+#            - Query=paramB,regex
+#            - RemoteAddr=192.168.1.0/24
+#            - Host=**.example.com
+#
+#        # 路由5：时间条件路由
+#        - id: id-003
+#          uri: http://seckill.zhaowa.com
+#          predicates:
+#            # 注意：YAML中不支持.or()的OR逻辑
+#            # 需要创建多个路由来实现OR效果
+#            - Before=2025-12-25T14:33:47.789+08:00[Asia/Shanghai]
+#
+#        # 路由5的OR分支1：after条件
+#        - id: id-003-after
+#          uri: http://seckill.zhaowa.com
+#          predicates:
+#            - After=2025-12-25T14:33:47.789+08:00[Asia/Shanghai]
+#
+#        # 路由5的OR分支2：between条件
+#        - id: id-003-between
+#          uri: http://seckill.zhaowa.com
+#          predicates:
+#            - Between=2025-12-01T00:00:00.000+08:00[Asia/Shanghai],2025-12-31T23:59:59.999+08:00[Asia/Shanghai]
+#
+#        # 路由6：自定义Token谓词
+#        - id: custom_route
+#          uri: http://backend-service
+#          predicates:
+#            - Path=/api/**
+#            - Token=Authorization,Bearer
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            # 授信地址列表
+            allowed-origins:
+              - "http://localhost:10000"
+              - "https://www.baidu.com"
+            # cookie, authorization认证信息
+            exposed-headers: "*"
+            allowed-methods: "*"
+            allow-credentials: true
+            allowed-headers: "*"
+#        add-to-simple-url-handler-mapping: true
+  sleuth:
+    sampler:
+      probability: 1
+      rate: 1000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+#logging:
+#  level: debug
