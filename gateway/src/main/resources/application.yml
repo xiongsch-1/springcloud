@@ -29,7 +29,7 @@ spring:
           # Nacos服务名称本来就是小写，但Eureka默认大写
           lower-case-service-id: true
           enabled: true
-#      routes:
+      routes:
 #        # 路由1：customer服务
 #        - id: customer-route
 #          uri: lb://customer
@@ -87,11 +87,11 @@ spring:
 #            - Between=2025-12-01T00:00:00.000+08:00[Asia/Shanghai],2025-12-31T23:59:59.999+08:00[Asia/Shanghai]
 #
 #        # 路由6：自定义Token谓词
-#        - id: custom_route
-#          uri: http://backend-service
-#          predicates:
-#            - Path=/api/**
-#            - Token=Authorization,Bearer
+        - id: custom_route
+          uri: http://customer
+          predicates:
+            - Path=/customer/**
+            - CustomToken=Authorization,Bearer
       globalcors:
         cors-configurations:
           '[/**]':

@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 @Component
-public class TokenRoutePredicateFactory extends
-        AbstractRoutePredicateFactory<TokenRoutePredicateFactory.Config> {
+public class CustomTokenRoutePredicateFactory extends
+        AbstractRoutePredicateFactory<CustomTokenRoutePredicateFactory.Config> {
 
-    public TokenRoutePredicateFactory() {
+    public CustomTokenRoutePredicateFactory() {
         super(Config.class);
     }
 

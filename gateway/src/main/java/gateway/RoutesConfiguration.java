@@ -1,25 +1,40 @@
 package gateway;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.filter.ratelimit.RateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 
 @Configuration
 public class RoutesConfiguration {
 
     @Autowired
-    private TokenRoutePredicateFactory tokenPredicateFactory;
+    private CustomTokenRoutePredicateFactory tokenPredicateFactory;
+
+    @Autowired
+    private KeyResolver hostAddrKeyResolver;
+
+    @Autowired
+    @Qualifier("customerRateLimiter")
+    private RateLimiter customerRateLimiter;
+
+    @Autowired
+    @Qualifier("serviceaRateLimiter")
+    private RateLimiter serviceaRateLimiter;
 
     @Bean
     public RouteLocator declare(RouteLocatorBuilder builder) {
         return builder.routes()
+//                .route(route -> route
+//                        .path("/gateway/customer/**")
+//                        .filters(f -> f.stripPrefix(1))
+//                        .uri("lb://customer")
                 .route(route -> route
-                        .path("/gateway/customer/**")
-                        .filters(f -> f.stripPrefix(1))
-                        .uri("lb://customer")
-                ).route(route -> route
                         .order(1)
                         .path("/gateway/servicea/**")
                         .filters(f -> f.stripPrefix(1))
@@ -52,14 +67,14 @@ public class RoutesConfiguration {
 //                                ZonedDateTime.parse("结束时间"))
 //                        .uri("seckill.zhaowa.com")
 //                ).route("custom_route", r -> r
-//                        .path("/api/**")
+//                        .path("/customer/**")
 //                        // 使用自定义谓词
 //                        .and()
 //                        .predicate(tokenPredicateFactory.apply(config -> {
 //                            config.setHeaderName("Authorization");
 //                            config.setTokenPrefix("Bearer");
 //                        }))
-//                        .uri("http://backend-service")
+//                        .uri("http://customer")
                 ).route(route -> route
                         .order(2)
                         .path("/gateway/service-a/**")
@@ -72,8 +87,18 @@ public class RoutesConfiguration {
                                 // response系列参数 不一一列举了
                                 .removeResponseHeader("responseHeader")
                         )
-                        .uri("lb://service-a")
-                )
+                        .uri("lb://service-a"))
+                .route(route -> route.path("/gateway/customer/**")
+                        .filters(f -> f.stripPrefix(1)
+                                .requestRateLimiter(limiter-> {
+                                            limiter.setKeyResolver(hostAddrKeyResolver);
+                                            limiter.setRateLimiter(customerRateLimiter);
+                                            // 限流失败后返回的HTTP status code
+                                            limiter.setStatusCode(HttpStatus.BANDWIDTH_LIMIT_EXCEEDED);
+                                        }
+                                )
+                        )
+                        .uri("lb://customer"))
                 .build();
     }
 
