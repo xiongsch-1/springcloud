@@ -82,4 +82,11 @@ public class CustomerController {
         log.info("name1={} name2={}", name1, name2);
         return customerService.testGet(name1, name2);
     }
+
+    @GetMapping("/login")
+    @ResponseBody
+    public Result login() {
+        return new Result(0, "login susscess!");
+    }
+
 }

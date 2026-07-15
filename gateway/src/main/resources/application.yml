@@ -116,6 +116,8 @@ management:
       exposure:
         include: "*"
 
-
+auth:
+  skip:
+    urls: http://localhost:30000/gateway/customer/login
 #logging:
 #  level: debug
