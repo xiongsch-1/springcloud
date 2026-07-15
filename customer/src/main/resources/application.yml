@@ -62,6 +62,13 @@ spring:
               java.lang.IllegalArgumentException: false
       function:
         definition: addCustomer;deleteCustomer
+#        rabbitmq-plugins enable rabbitmq_shovel
+#        rabbitmq-plugins enable rabbitmq_shovel_management
+      rabbit:
+        bindings:
+          deleteCustomer-in-0:
+            consumer:
+              auto-bind-dlq: true
     nacos:
       discovery:
         # Nacos的服务注册地址，可以配置多个，逗号分隔
