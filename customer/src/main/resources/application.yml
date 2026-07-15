@@ -39,12 +39,27 @@ spring:
           destination: delete-customer-topic
           content-type: text/plain
           binder: my-rabbit
+#          consumer:
+#            max-attempts: 2
+#            back-off-initial-interval: 5000  # 延迟5秒
         # 删除customer - Consumer
         deleteCustomer-in-0:
           destination: delete-customer-topic
           content-type: text/plain
           group: delete-customer-group
           binder: my-rabbit
+          consumer:
+            # 如果最大尝试次数为1，即不重试. 默认是做3次尝试
+            max-attempts: 5
+            # 两次重试之间的初始间隔
+            backOffInitialInterval: 2000
+            # 重试最大间隔
+            backOffMaxInterval: 10000
+            # 每次重试后，间隔时间乘以的系数
+            backOffMultiplier: 2
+            # 如果某个异常你不想重试，写在这里
+            retryableExceptions:
+              java.lang.IllegalArgumentException: false
       function:
         definition: addCustomer;deleteCustomer
     nacos:

@@ -2,6 +2,7 @@ package com.zhaowa.galaxy.springcloud.customer.service;
 
 
 import com.zhaowa.galaxy.springcloud.customer.beans.RequestCustomer;
+import com.zhaowa.galaxy.springcloud.customer.entity.Customer;
 import com.zhaowa.galaxy.springcloud.servicea.api.Result;
 import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;

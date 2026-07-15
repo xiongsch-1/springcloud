@@ -1,11 +1,15 @@
 package com.zhaowa.galaxy.springcloud.customer.service.impl;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.zhaowa.galaxy.springcloud.customer.beans.RequestCustomer;
+import com.zhaowa.galaxy.springcloud.customer.entity.Customer;
 import com.zhaowa.galaxy.springcloud.customer.feign.AService;
 import com.zhaowa.galaxy.springcloud.customer.loadbalance.TrafficContext;
 import com.zhaowa.galaxy.springcloud.customer.service.CustomerService;
 import com.zhaowa.galaxy.springcloud.servicea.api.Param;
 import com.zhaowa.galaxy.springcloud.servicea.api.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +21,7 @@ import static com.zhaowa.galaxy.springcloud.customer.constant.Constant.TRAFFIC_V
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
+    private static final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
     @Autowired
     private WebClient.Builder webClientBuilder;
 
@@ -66,5 +71,24 @@ public class CustomerServiceImpl implements CustomerService {
     public Result testSentinel2(String param1, String param2) {
         Result r2 = aService.testSentinel2(param2);
         return new Result(200, r2.getMsg());
+    }
+
+    @Override
+    public Customer requestCustomer(RequestCustomer requestCustomer) {
+        if (0 == requestCustomer.getUserId()) {
+            throw new RuntimeException("invalid request customer");
+        }
+        return new Customer(requestCustomer.getUserId(), requestCustomer.getUserName());
+    }
+
+    @Override
+    public void deleteCustomer(Long userId) {
+        log.info("delete customer {}", userId);
+        if (0 == userId) {
+            throw new RuntimeException("customer not exist!");
+        }
+        if (-1 == userId) {
+            throw new IllegalArgumentException("invalid userId!");
+        }
     }
 }

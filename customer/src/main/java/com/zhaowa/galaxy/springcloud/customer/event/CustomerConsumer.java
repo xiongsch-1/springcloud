@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.integration.annotation.ServiceActivator;
+import org.springframework.messaging.support.ErrorMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -39,4 +41,12 @@ public class CustomerConsumer {
             customerService.deleteCustomer(params.get(0));
         };
     }
+
+    // 消费失败后触发一段降级流程
+    // 如果设置了多次本地重试，那么只有最后一次重试失败才会执行这段降级流程
+    @ServiceActivator(inputChannel = "request-customer-topic.add-customer-group.errors")
+    public void requestCustomerFallback(ErrorMessage errorMessage) throws Exception {
+        log.info("consumer error: {}", errorMessage);
+    }
+
 }
