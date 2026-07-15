@@ -1,6 +1,8 @@
 package com.zhaowa.galaxy.springcloud.customer.controller;
 
 
+import com.zhaowa.galaxy.springcloud.customer.beans.RequestCustomer;
+import com.zhaowa.galaxy.springcloud.customer.event.CustomerProducer;
 import com.zhaowa.galaxy.springcloud.customer.service.CustomerService;
 import com.zhaowa.galaxy.springcloud.servicea.api.Result;
 import org.slf4j.Logger;
@@ -20,6 +22,9 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private CustomerProducer customerProducer;
 
     @Value("${disableRequest:false}")
     private Boolean disable;
@@ -83,10 +88,16 @@ public class CustomerController {
         return customerService.testGet(name1, name2);
     }
 
-    @GetMapping("/login")
-    @ResponseBody
-    public Result login() {
-        return new Result(0, "login susscess!");
+    @GetMapping("/sendCustomerEvent")
+    public void sendCustomerEvent(@RequestParam Long userId, @RequestParam String userName) {
+        RequestCustomer requestCustomer = new RequestCustomer(userId, userName);
+        customerProducer.sendCustomer(requestCustomer);
     }
+
+    @GetMapping("/deleteCustomerEvent")
+    public void deleteCustomerEvent(@RequestParam Long userId) {
+        customerProducer.deleteCustomer(userId);
+    }
+
 
 }

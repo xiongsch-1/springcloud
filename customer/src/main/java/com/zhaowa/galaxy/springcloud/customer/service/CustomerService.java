@@ -1,6 +1,7 @@
 package com.zhaowa.galaxy.springcloud.customer.service;
 
 
+import com.zhaowa.galaxy.springcloud.customer.beans.RequestCustomer;
 import com.zhaowa.galaxy.springcloud.servicea.api.Result;
 import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
@@ -11,4 +12,6 @@ public interface CustomerService {
     Mono<ResponseEntity<Result>> testGet2(String param1, String param2);
     Result testSentinel(String param1, String param2);
     Result testSentinel2(String param1, String param2);
+    Customer requestCustomer(RequestCustomer requestCustomer);
+    void deleteCustomer(Long userId);
 }
